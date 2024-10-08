@@ -41,25 +41,22 @@ class TransferController extends Controller
     }
 
     public function update(Request $request, Transfer $transfer)
-    {
-        $request->validate([
-            'nama' => 'required',
-            'kelas' => 'required',
-            'nominal' => 'required',
-        ]);
+{
+    $request->validate([
+        'nama' => 'required',
+        'kelas' => 'required',
+        'nominal' => 'required',
+    ]);
 
-        if ($request->fails()) {
-            return response()->json($request->errors(), 422);
-        }
+    $transfer->update([
+        'nama' => $request->nama,
+        'kelas' => $request->kelas,
+        'nominal' => $request->nominal,
+    ]);
 
-        $transfer->update([
-            'nama' => $request->nama,
-            'kelas' => $request->kelas,
-            'nominal' => $request->nominal,
-        ]);
+    return new TransferResource(true, 'Data Transfer Berhasil Di Perbarui', $transfer);
+}
 
-        return new TransferResource(true, 'Data Transfer Berhasil Di Perbarui', $transfer);
-    }
 
     public function destroy(Transfer $transfer)
     {
